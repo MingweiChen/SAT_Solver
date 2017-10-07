@@ -16,7 +16,7 @@ pub fn sudoku() {
 	let mut file = OpenOptions::new().read(true).write(true).append(true).open("./foo.txt").unwrap();
 	file.write(s.out.as_bytes()).unwrap();
 
-	let file_puzzle = File::open("./SudokuPuzzle.txt").unwrap();
+	let file_puzzle = File::open("./s1.txt").unwrap();
 	let reader = BufReader::new(file_puzzle);
 
 	let mut input = Vec::new();
@@ -79,9 +79,12 @@ pub fn sudoku() {
 			Err(_) => {},
 		}
 	}
-	solver.solve();
+	if !solver.solve(){
+		println!("NO SOLUTION");
+		return ;
+	}
 	let res = solver.get_model();
-
+	
 	let mut v = Vec::new();
 	for i in 0..1000{
 		if res[i] == VarValue::VTrue{
